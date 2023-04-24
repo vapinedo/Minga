@@ -1,0 +1,21 @@
+.container-main
+{
+  width: 25%;
+  margin: 0 auto;
+}
+
+.text{
+  font-size: x-small;
+}
+
+.password{
+  font-size: small;
+}
+
+.mingga{
+  color: rgb(198, 15, 15);
+}
+
+.welcome{
+  font-size:x-large;
+}
