@@ -1,3 +1,4 @@
 # Sitio Web Minga
 
-Construido usando Angular.
+- Construido usando Angular.
+- Bootstrap.
