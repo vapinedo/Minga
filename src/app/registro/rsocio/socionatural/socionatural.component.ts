@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ciudadObj } from 'src/app/interfaces/ciudadI';
+import { Pais } from 'src/app/interfaces/pais.interface';
 import { genObj } from 'src/app/interfaces/generosI';
-import { PaisObj } from 'src/app/interfaces/paisI';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
+import { Ciudad } from '../../../interfaces/ciudad.interface';
+import { Usuario } from 'src/app/interfaces/usuario.interface';
 
 
 @Component({
@@ -14,42 +16,57 @@ import { ApiService } from 'src/app/services/api.service';
 
 export class SocionaturalComponent implements OnInit  {
 
+  usuario: Usuario;
+  paises: Pais[] = []; 
+  ciudades: Ciudad[] = []; 
+  tipos_documento = ["Cedula Ciudadanía", "Tarjeta de Identidad"];
+
+  form = this.formBuilder.group({
+    paisID: [null, [Validators.required]],
+    ciudadID: [null, [Validators.required]],
+    nombres: ["", [Validators.required]],
+    apellidos: ["", [Validators.required]],
+    tipo_documento: [null, [Validators.required]],
+    numero_documento: [1, [Validators.required]],
+    fecha_nacimiento: [null, [Validators.required]],
+    genero: [null, [Validators.required]],
+    celular: [null, [Validators.required]],
+    email: [null, [Validators.required]],
+    confirmar_email: [null, [Validators.required]],
+    usuario_invita: [null],
+    usuario: [null],
+    password: [null],
+  });   
+
 
   //Variables de pais
   keyword = 'name';
-  data: PaisObj[];
-
 
   //Variables genero
   genero: genObj[];
 
-  //Variables ciudad
-  ciudades: ciudadObj[];
-
-
-
-  constructor(private apiService:ApiService){}
+  constructor(
+    private apiService:ApiService,
+    private formBuilder: FormBuilder,
+  ){}
 
 
   ngOnInit(): void {
-
     this.getDataPaises();
     this.getDataGenero();
   }
 
-
+  onPaisChange(event: any) {
+    const ciudadID = event.value;
+    this.getDataCiudades(ciudadID);
+  }
 
   //METODOS APIREST
   //Metodo obtener paises
   getDataPaises(): void{
-    this.apiService.getPaises().subscribe(
-      res => this.data = res);
+    this.apiService.getPaises()
+    .subscribe(response => this.paises = response);
   }
-
-  prueba(){
-    console.log("paises ha cambiado");
-  }
-
 
   //Metodo obtener genero
   getDataGenero(): void{
@@ -57,16 +74,16 @@ export class SocionaturalComponent implements OnInit  {
       res => this.genero = res);
   }
 
-
-
   //Metodo obtener ciudad
-  getDataCiudades(): void{
-    this.apiService.getCiudades(1).subscribe(
-      res => this.ciudades = res);
+  getDataCiudades(ciudadId: number): void{
+    this.apiService.getCiudades(ciudadId)
+    .subscribe(response => this.ciudades = response);
   }
 
-//tengo q hacer una variable que guarde el id
-
+  onSubmit() {
+    console.log("Formulario", this.form.value);
   }
+
+}
 
 

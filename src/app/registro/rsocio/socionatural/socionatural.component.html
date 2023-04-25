@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light" style="background-color: #b1b2b3">
+<nav class="navbar navbar-light mb-5" style="background-color: #b1b2b3">
   <div class="container-fluid">
     <img
       src="assets/png/LogoMinggaN.png"
@@ -9,192 +9,80 @@
     <hr />
   </div>
 </nav>
-<br />
 
-<div class="container-fluid">
+<article>
   <h2 class="text-center">Regístrate gratis como persona natural</h2>
-  <hr />
-</div>
-<br />
-<br />
+  
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-<div class="container-fluid">
-  <div class="container-main">
-    <form>
-      <div class="container">
-        <label class="l-01"> <h5>Lugar de residencia</h5></label>
-        <div class="form-floating mb-3">
-          <ng-autocomplete
-            [data]="data"
-            placeholder="Pais"
-            [searchKeyword]="keyword"
-            [itemTemplate]="itemTemplate"
-            [notFoundTemplate]="notFoundTemplate">
-          </ng-autocomplete>
-
-          <ng-template #itemTemplate let-item>
-          <a [innerHTML]="item.name"></a>
-          </ng-template>
-
-          <ng-template #notFoundTemplate let-notFound>
-          <div [innerHTML]="notFound"></div>
-          </ng-template>
-        </div>
-
-
-
-
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" placeholder="Ciudad" required="" />
-          <label for="floatingInput">Ciudad</label>
-        </div>
-
-      </div>
-
-
-
-      <div class="container">
-        <label class="l-01"> <h5>Datos personales</h5></label>
-        <div class="form-floating mb-3">
-          <input type="text"  class="form-control"  id="floatingInput"  placeholder="Nombres"  required=""  />
-          <label for="floatingInput">Nombres</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="text"  class="form-control"  id="floatingInput"  placeholder="Apellidos"  required=""  />
-          <label for="floatingInput">Apellidos</label>
-        </div>
-        <div class="form-floating mb-3">
-          <select
-            class="form-select"  aria-label="Default select example"  required=""  >
-            <option selected>Tipo de documento de identidad</option>
-            <option value="1">C.C</option>
-            <option value="2">T.I</option>
-            <option value="3">Pasaporte</option>
-          </select>
-          <label for="floatingInput">Identidad.</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input  type="text"  class="form-control"  id="floatingInput"  placeholder="N° de documento de identidad"  required=""  />
-          <label for="floatingInput">N° de documento de identidad</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input  type="date"  class="form-control" id="floatingPassword"  placeholder="Fecha de nacimiento"  required=""  />
-          <label for="floatingPassword">Selecciona la fecha de tu nacimiento</label  >
-        </div>
-
-
-        <div class="form-floating mb-3">
-          <select class="form-select" aria-label="Default select example"
-          placeholder="Genero" required=""
-           >
-            <option disabled selected ></option>
-            <option *ngFor="let genero of genero">
-               {{genero.name}}
-            </option>
-          </select>
-          <label for="floatingInput">Género</label>
-        </div>
-
-
-
-
-
-
-
-
-
-        <div class="form-floating mb-3">
-          <input  type="tel" pattern="[0-9]{10}"  required=""  class="form-control"  id="floatingInput"  placeholder="N° de celular"  />
-          <label for="floatingInput">N° de celular</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input  type="email"  class="form-control"  id="floatingInput"  placeholder="name@example.com"  required=""  />
-          <label for="floatingInput">Correo electrónico</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input  type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required="" />
-          <label for="floatingInput">Confirmar correo electrónico</label>
-        </div>
-      </div>
-      <div class="container">
-        <label class="l-01"> <h5>Datos de vinculacion a Mingga</h5></label>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" placeholder="Usuario socio que te invita" />
-          <label for="floatingInput">Usuario socio que te invita</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" placeholder="Crear usuario" required="" />
-          <label for="floatingInput">Crear usuario</label>
-        </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Crear contraseña" required="" />
-            <label for="floatingPassword">Crear contraseña</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Confirmar tu contraseña" required="" />
-            <label for="floatingPassword">Confirmar  contraseña</label>
-          </div>
-        </div>
-        <br>
-        <div class="container text-center">
-          <div class="container text-center">
-            * Cualquier información falsa o incorrecta dará lugar a la anulación de la vinculación.
-        </div>
-        </div>
-        <div class="container text-center">
-          Al hacer clic en <b>Registrarse</b>, aceptas los
-          <a href="#" class="m-0">Términos y condiciones de uso</a> de Mingga.
-        </div>
-        <div class="pt-4" style="text-align: center">
-          <button type="submit" class="btn btn-primary btn-lg">Registrarse</button>
-        </div>
-        <div class="container text-center pt-4">
-          <b
-            >¿Ya tienes cuenta? <a href="" class="m-0">Inicia sesión aquí</a>
-          </b>
-        </div>
-    </form>
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+        <mat-label>País</mat-label>
+        <mat-select (selectionChange)="onPaisChange($event)" formControlName="paisID" disableRipple>
+          <mat-option *ngFor="let item of paises" [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>     
     </div>
-  </div>
-      <br />
-          <!-- <div style="padding-top: 1rem;">
-                <a href="#">¿Has olvidado la  contraseña?</a>
-            </div> -->
-
-  <app-contacto></app-contacto>
-
-
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-
-
-  <div class="ng-autocomplete">
-    <ng-autocomplete
-      [data]="data"
-      [searchKeyword]="keyword"
-      placeholder="Select country"
-      [itemTemplate]="itemTemplate"
-      [notFoundTemplate]="notFoundTemplate">
-    </ng-autocomplete>
-
-    <ng-template #itemTemplate let-item>
-    <a [innerHTML]="item.name"></a>
-    </ng-template>
-
-    <ng-template #notFoundTemplate let-notFound>
-    <div [innerHTML]="notFound"></div>
-    </ng-template>
+      
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="ciudadID" disableRipple>
+          <mat-option *ngFor="let item of ciudades" [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>     
     </div>
 
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Nombres</mat-label>
+          <input matInput type="text" formControlName="nombres" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['nombres']?.invalid && (form.controls['nombres']?.dirty || form.controls['nombres']?.touched)">
+              <span *ngIf="form.controls['nombres']?.errors?.['required']">Nombres es requerido</span>
+          </mat-error>
+      </mat-form-field> 
+    </div>
 
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Apellidos</mat-label>
+          <input matInput type="text" formControlName="apellidos" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['apellidos']?.invalid && (form.controls['apellidos']?.dirty || form.controls['apellidos']?.touched)">
+              <span *ngIf="form.controls['apellidos']?.errors?.['required']">Apellidos es requerido</span>
+          </mat-error>
+      </mat-form-field> 
+    </div>    
 
-    <br>
-    <br><br>
-    <br><br>
-    <br><br>
-    <br>
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+        <mat-label>Tipo de Documento</mat-label>
+        <mat-select formControlName="ciudad" disableRipple>
+          <mat-option *ngFor="let item of tipos_documento" [value]="item">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>     
+    </div>    
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Número de Documento</mat-label>
+          <input matInput type="text" formControlName="numero_documento" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['numero_documento']?.invalid && (form.controls['numero_documento']?.dirty || form.controls['numero_documento']?.touched)">
+              <span *ngIf="form.controls['numero_documento']?.errors?.['required']">Apellidos es requerido</span>
+          </mat-error>
+      </mat-form-field> 
+    </div>    
+
+    <button class="mb-5" type="submit" color="primary" mat-raised-button>Crear</button>
+
+    <pre>
+      {{ form.value | json }}
+    </pre>
+
+  </form>
+</article>  
