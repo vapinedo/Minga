@@ -2,9 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Pais } from '../interfaces/pais.interface';
-import { genObj } from '../interfaces/generosI';
 import { Ciudad } from '../interfaces/ciudad.interface';
-import { Usuario } from '../interfaces/usuario.interface';
+import { TipoPersona } from '../interfaces/tipoPersona.interfase';
+import { Genero } from '../interfaces/genero.interfase';
+import { TipoDocumento } from '../interfaces/tipoDocumento.interfase';
 
 
 @Injectable ({
@@ -15,9 +16,11 @@ export class ApiService {
 
   //Variables url
   private urlPaises: string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/countries';
-  private urlGenero: string =  'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/genders';
   private urlCiudades: string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/cities?CountryId=';
-  private usuario: string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/auth/users';
+  private urlPersona:  string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/personTypes';
+  private urlGenero: string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/additionalTypes?PersonTypeId=2';
+  private urlTipoDocumento: String = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/documentTypes?CountryId=';
+  private urlTipoDocumentoParametro: String = '&PersonTypeId=2';
 
   constructor(private http: HttpClient) {}
 
@@ -28,23 +31,32 @@ export class ApiService {
 
   }
 
-  //Obtner genero
-  getGenero():Observable<genObj[]>{
-    const headers = new HttpHeaders().append("Version" , "0.0.1")
-    return this.http.get<genObj[]>(this.urlGenero,{headers});
-
-  }
-
+  //Obtener ciudades
   getCiudades(CountryId: number):Observable<Ciudad[]>{
     const headers = new HttpHeaders().append("Version" , "0.0.1")
     return this.http.get<Ciudad[]>(`${this.urlCiudades}${CountryId}`, { headers });
   }
 
-    // crearUsuario(usuario: Usuario) {
-    //   const headers = new HttpHeaders().append("Version" , "0.0.1")
-    //   return this.http.get<Ciudad[]>(`${this.usuario}$`, { usuario: usuario}, { headers });        
-    // }
 
+  //Obtener tipo de persona
+  getPersona():Observable<TipoPersona[]>{
+    const headers = new HttpHeaders().append("Version" , "0.0.1")
+    return this.http.get<TipoPersona[]>(this.urlPersona,{headers});
+
+  }
+
+  //Obtener date tipe - genero
+  getGenero():Observable<Genero[]>{
+    const headers = new HttpHeaders().append("Version" , "0.0.1")
+    return this.http.get<Genero[]>(this.urlGenero,{headers});
+
+  }
+
+  //Obtener tipo de documento
+  getDocumento(CountryId: number):Observable<TipoDocumento[]>{
+    const headers = new HttpHeaders().append("Version" , "0.0.1")
+    return this.http.get<TipoDocumento[]>(`${this.urlTipoDocumento}${CountryId}${this.urlTipoDocumentoParametro}`, { headers });
+  }
 
 
   }

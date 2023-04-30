@@ -12,7 +12,7 @@
 
 <article>
   <h2 class="text-center">Regístrate gratis como persona natural</h2>
-  
+
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="row mb-3">
@@ -23,9 +23,9 @@
             {{ item.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>     
+      </mat-form-field>
     </div>
-      
+
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
         <mat-label>Ciudad</mat-label>
@@ -34,8 +34,9 @@
             {{ item.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>     
+      </mat-form-field>
     </div>
+
 
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
@@ -44,7 +45,7 @@
           <mat-error *ngIf="form.controls['nombres']?.invalid && (form.controls['nombres']?.dirty || form.controls['nombres']?.touched)">
               <span *ngIf="form.controls['nombres']?.errors?.['required']">Nombres es requerido</span>
           </mat-error>
-      </mat-form-field> 
+      </mat-form-field>
     </div>
 
     <div class="row mb-3">
@@ -54,19 +55,22 @@
           <mat-error *ngIf="form.controls['apellidos']?.invalid && (form.controls['apellidos']?.dirty || form.controls['apellidos']?.touched)">
               <span *ngIf="form.controls['apellidos']?.errors?.['required']">Apellidos es requerido</span>
           </mat-error>
-      </mat-form-field> 
-    </div>    
+      </mat-form-field>
+    </div>
+
+
 
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
-        <mat-label>Tipo de Documento</mat-label>
-        <mat-select formControlName="ciudad" disableRipple>
-          <mat-option *ngFor="let item of tipos_documento" [value]="item">
-            {{ item }}
+        <mat-label>Tipo de documento</mat-label>
+        <mat-select formControlName="tipo_documento" disableRipple>
+          <mat-option *ngFor="let item of documento" [value]="item.id">
+            {{ item.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>     
-    </div>    
+      </mat-form-field>
+    </div>
+
 
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
@@ -75,8 +79,42 @@
           <mat-error *ngIf="form.controls['numero_documento']?.invalid && (form.controls['numero_documento']?.dirty || form.controls['numero_documento']?.touched)">
               <span *ngIf="form.controls['numero_documento']?.errors?.['required']">Apellidos es requerido</span>
           </mat-error>
-      </mat-form-field> 
-    </div>    
+      </mat-form-field>
+    </div>
+
+
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.controls['fecha_nacimiento']?.invalid && (form.controls['fecha_nacimiento']?.dirty || form.controls['fecha_nacimiento']?.touched)">
+              <span *ngIf="form.controls['fecha_nacimiento']?.errors?.['required']">Apellidos es requerido</span>
+          </mat-error>
+      </mat-form-field>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+        <mat-label>Genero</mat-label>
+        <mat-select formControlName="genero" disableRipple>
+          <mat-option *ngFor="let item of genero" [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
 
     <button class="mb-5" type="submit" color="primary" mat-raised-button>Crear</button>
 
@@ -85,4 +123,4 @@
     </pre>
 
   </form>
-</article>  
+</article>
