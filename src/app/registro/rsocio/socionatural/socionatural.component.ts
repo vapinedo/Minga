@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Pais } from 'src/app/interfaces/pais.interface';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Ciudad } from '../../../interfaces/ciudad.interface';
 import { Usuario } from 'src/app/interfaces/usuario.interface';
 import { TipoPersona } from 'src/app/interfaces/tipoPersona.interfase';
-import { compileNgModule } from '@angular/compiler';
 import { Genero } from 'src/app/interfaces/genero.interfase';
 import { TipoDocumento } from 'src/app/interfaces/tipoDocumento.interfase';
+import {ErrorStateMatcher} from '@angular/material/core';
+
 
 
 @Component({
@@ -18,33 +19,48 @@ import { TipoDocumento } from 'src/app/interfaces/tipoDocumento.interfase';
   encapsulation: ViewEncapsulation.None
 })
 
+
 export class SocionaturalComponent implements OnInit  {
 
+ //Validar correo valido o invalido
 
+
+  //Para arreglar el calendario
+  form_date: FormGroup;
+
+  //Variables protocolo http
   usuario: Usuario;
   paises: Pais[] = [];
   ciudades: Ciudad[] = [];
   tipoPersona: TipoPersona[] = [];
   genero: Genero[] = [];
   documento: TipoDocumento[] = [];
+  f_nacimiento = "";
+
 
 
   form = this.formBuilder.group({
-    paisID: [null, [Validators.required]], //number
-    ciudadID: [null, [Validators.required]],
-    nombres: ["", [Validators.required]],  //string
+
+
+    nombres: ["", [Validators.required]],
     apellidos: ["", [Validators.required]],
-    PersonTypeId:  [2],
-    tipo_documento: [null, [Validators.required]],
-    numero_documento: [null, [Validators.required]],
-    fecha_nacimiento: [null, [Validators.required]],
-    genero: [null, [Validators.required]],
-    celular: [null, [Validators.required]],
-    email: [null, [Validators.required]],
-    confirmar_email: [null, [Validators.required]],
-    usuario_invita: [null],
-    usuario: [null],
-    password: [null],
+    documentNumber: ["", [Validators.required]],
+    email: ["", [Validators.required]],
+    phone: [null, [Validators.required]],
+    password: [null, [Validators.required]],
+    birthDate : ["", [Validators.required]],
+    DocumentTypeId: [null, [Validators.required]],
+    RoleId: [3],
+    PersonTypeId: [2],
+    CityId: [null, [Validators.required]],//
+    CountryId: [null, [Validators.required]], //number
+    AdditionalTypeId: [null, [Validators.required]],
+    username:  [null, [Validators.required]],
+    discount: [0],
+    Partner: [null],
+
+    passwordConf: [null, [Validators.required]],
+
 
   });
 
@@ -52,8 +68,13 @@ export class SocionaturalComponent implements OnInit  {
   constructor(
     private apiService:ApiService,
     private formBuilder: FormBuilder,
+    private fb: FormBuilder,
 
   ){
+    this.form_date = this.fb.group({
+      format1: new FormControl(new Date()),
+      format2: new FormControl(new Date())
+    });
 
   }
 
@@ -62,6 +83,7 @@ export class SocionaturalComponent implements OnInit  {
     this.getDataPaises();
     this.getDataPersona();
     this.getDataGenero();
+    console.log(this.form_date.value);
   }
 
   onPaisChange(event: any) {
@@ -105,19 +127,34 @@ export class SocionaturalComponent implements OnInit  {
 
 
   //Obtener tipo de documento
-  getDataDocumento(ciudadId: number): void{
-    this.apiService.getDocumento(ciudadId)
+  getDataDocumento(tipo_document: number): void{
+    this.apiService.getDocumento(tipo_document)
     .subscribe(response =>
 
       this.documento = response);
 
   }
 
+  //Enviar informacion
+
+
 
 
   //Enviar formulario
-  onSubmit() {
-    console.log("Formulario", this.form.value);
+  async onSubmit() {
+    if( this.form.value.birthDate ){
+      const date = this.form.value.birthDate;
+    this.f_nacimiento = new Date (date).toISOString().replace('-', '/').split('T')[0].replace('-', '/');
+    }
+    this.form.value.birthDate = this.f_nacimiento;
+    //llamar enpoint post crear usuario
+
+    const prueba1 = {};
+
+    // await this.apiService.postCrearUsuario(this.form.value).subscribe()
+
+    console.log(this.form.value); //value que
+    console.log(this.f_nacimiento);
   }
 
   }

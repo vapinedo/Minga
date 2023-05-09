@@ -6,6 +6,8 @@ import { Ciudad } from '../interfaces/ciudad.interface';
 import { TipoPersona } from '../interfaces/tipoPersona.interfase';
 import { Genero } from '../interfaces/genero.interfase';
 import { TipoDocumento } from '../interfaces/tipoDocumento.interfase';
+import { Usuario } from '../interfaces/usuario.interface';
+
 
 
 @Injectable ({
@@ -14,13 +16,18 @@ import { TipoDocumento } from '../interfaces/tipoDocumento.interfase';
 
 export class ApiService {
 
-  //Variables url
+  //Variables url get - socio natural
   private urlPaises: string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/countries';
   private urlCiudades: string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/cities?CountryId=';
   private urlPersona:  string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/personTypes';
   private urlGenero: string = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/additionalTypes?PersonTypeId=2';
   private urlTipoDocumento: String = 'https://pelagic-cocoa-382420.rj.r.appspot.com/resources/documentTypes?CountryId=';
   private urlTipoDocumentoParametro: String = '&PersonTypeId=2';
+
+
+  //Variables url post
+  private urlNuevoUsuario: String = 'https://pelagic-cocoa-382420.rj.r.appspot.com/auth/users';
+
 
   constructor(private http: HttpClient) {}
 
@@ -52,12 +59,40 @@ export class ApiService {
 
   }
 
-  //Obtener tipo de documento
+
+
+  //Obtener tipo de documento natural
   getDocumento(CountryId: number):Observable<TipoDocumento[]>{
     const headers = new HttpHeaders().append("Version" , "0.0.1")
     return this.http.get<TipoDocumento[]>(`${this.urlTipoDocumento}${CountryId}${this.urlTipoDocumentoParametro}`, { headers });
   }
 
 
+
+
+
+
+  //CREAR USUARIO ES EL MISMO PARA TODOS
+  //Crear usuario
+  postCrearUsuario(usuario: Usuario):Observable<Usuario>{
+    const headers = new HttpHeaders().append("Version" , "0.0.1")
+    return this.http.post<Usuario>(`${this.urlNuevoUsuario}`, usuario, {headers});
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
 

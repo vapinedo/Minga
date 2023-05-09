@@ -6,10 +6,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AutocompleteLibModule } from "angular-ng-autocomplete";
 import { MaterialModule } from './modules/custom/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 // Services
 import { ApiService } from './services/api.service';
+import { ApiService2 } from './services/api.service2';
+import { DatePickerFormatDirective } from "./date-picker-format.directive";
 
+
+
+//components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent} from './home/navbar/navbar.component';
@@ -20,7 +28,6 @@ import { OfertasComponent } from './home/ofertas/ofertas.component';
 import { RsocioComponent } from './registro/rsocio/rsocio.component';
 import { ContactoComponent } from './home/contacto/contacto.component';
 import { RvendedorComponent } from './registro/rvendedor/rvendedor.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocionaturalComponent } from './registro/rsocio/socionatural/socionatural.component';
 import { VendedorbysComponent } from './registro/rvendedor/vendedorbys/vendedorbys.component';
 import { SociojuridicoComponent } from './registro/rsocio/sociojuridico/sociojuridico.component';
@@ -53,12 +60,14 @@ const modules = [
   AppRoutingModule,
   ReactiveFormsModule,
   AutocompleteLibModule,
+  MatDatepickerModule,
+  MatMomentDateModule,
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, DatePickerFormatDirective],
   imports: [modules, BrowserAnimationsModule],
-  providers: [ApiService,
+  providers: [ApiService, ApiService2,
     ],
   bootstrap: [AppComponent]
 })

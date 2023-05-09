@@ -16,9 +16,10 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="row mb-3">
+      <label class="l-01"> <h5>Lugar de residencia</h5></label>
       <mat-form-field appearance="outline" class="col">
         <mat-label>País</mat-label>
-        <mat-select (selectionChange)="onPaisChange($event)" formControlName="paisID" disableRipple>
+        <mat-select (selectionChange)="onPaisChange($event)" formControlName="CountryId" disableRipple>
           <mat-option *ngFor="let item of paises" [value]="item.id">
             {{ item.name }}
           </mat-option>
@@ -29,7 +30,7 @@
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
         <mat-label>Ciudad</mat-label>
-        <mat-select formControlName="ciudadID" disableRipple>
+        <mat-select formControlName="CityId" disableRipple>
           <mat-option *ngFor="let item of ciudades" [value]="item.id">
             {{ item.name }}
           </mat-option>
@@ -39,6 +40,7 @@
 
 
     <div class="row mb-3">
+      <label class="l-01"> <h5>Datos personales</h5></label>
       <mat-form-field appearance="outline" class="col">
           <mat-label>Nombres</mat-label>
           <input matInput type="text" formControlName="nombres" autocomplete="disabled">
@@ -63,7 +65,7 @@
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
         <mat-label>Tipo de documento</mat-label>
-        <mat-select formControlName="tipo_documento" disableRipple>
+        <mat-select formControlName="DocumentTypeId" disableRipple>
           <mat-option *ngFor="let item of documento" [value]="item.id">
             {{ item.name }}
           </mat-option>
@@ -75,43 +77,100 @@
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
           <mat-label>Número de Documento</mat-label>
-          <input matInput type="text" formControlName="numero_documento" autocomplete="disabled">
-          <mat-error *ngIf="form.controls['numero_documento']?.invalid && (form.controls['numero_documento']?.dirty || form.controls['numero_documento']?.touched)">
-              <span *ngIf="form.controls['numero_documento']?.errors?.['required']">Apellidos es requerido</span>
+          <input matInput type="text" formControlName="documentNumber" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['documentNumber']?.invalid && (form.controls['documentNumber']?.dirty || form.controls['documentNumber']?.touched)">
+              <span *ngIf="form.controls['documentNumber']?.errors?.['required']">Número de Documento es requerido</span>
           </mat-error>
       </mat-form-field>
     </div>
-
 
 
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
-          <mat-label>Fecha de nacimiento</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="form.controls['fecha_nacimiento']?.invalid && (form.controls['fecha_nacimiento']?.dirty || form.controls['fecha_nacimiento']?.touched)">
-              <span *ngIf="form.controls['fecha_nacimiento']?.errors?.['required']">Apellidos es requerido</span>
+          <mat-label>Fechade nacimiento (YYYY/MM/DD)</mat-label>
+					<input
+            matInput
+            [matDatepicker]="datepicker"
+            datePickerFormat="YYYY/MM/DD"
+            formControlName="birthDate"
+          >
+					<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+					<mat-datepicker #datepicker></mat-datepicker>
+          <mat-error *ngIf="form.controls['birthDate']?.invalid && (form.controls['birthDate']?.dirty || form.controls['birthDate']?.touched)">
+              <span *ngIf="form.controls['birthDate']?.errors?.['required']">Apellidos es requerido</span>
           </mat-error>
       </mat-form-field>
     </div>
-
-
-
-
-
-
-
 
 
     <div class="row mb-3">
       <mat-form-field appearance="outline" class="col">
         <mat-label>Genero</mat-label>
-        <mat-select formControlName="genero" disableRipple>
+        <mat-select formControlName="AdditionalTypeId" disableRipple>
           <mat-option *ngFor="let item of genero" [value]="item.id">
             {{ item.name }}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+    </div>
+
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="text" formControlName="email" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['email']?.invalid && (form.controls['email']?.dirty || form.controls['email']?.touched)">
+              <span *ngIf="form.controls['email']?.errors?.['required']">Número de Documento es requerido</span>
+          </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>N° de celular</mat-label>
+          <input matInput type="text" formControlName="phone" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['phone']?.invalid && (form.controls['phone']?.dirty || form.controls['phone']?.touched)">
+              <span *ngIf="form.controls['phone']?.errors?.['phone']">Nickname es requerido</span>
+          </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div class="row mb-3">
+      <label class="l-01"> <h5>Datos de Vinculación a MingaRMB</h5></label>
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Nickname usuario que te invita (Campo no obligatorio)*</mat-label>
+          <input matInput type="text" formControlName="Partner" autocomplete="disabled">
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Crea tu nickname</mat-label>
+          <input matInput type="text" formControlName="username" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['username']?.invalid && (form.controls['username']?.dirty || form.controls['username']?.touched)">
+              <span *ngIf="form.controls['username']?.errors?.['username']">Nickname es requerido</span>
+          </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Crea tu contraseña</mat-label>
+          <input matInput type="password" formControlName="password" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['password']?.invalid && (form.controls['password']?.dirty || form.controls['password']?.touched)">
+              <span *ngIf="form.controls['password']?.errors?.['password']">Contraseña es requerido</span>
+          </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-3">
+      <mat-form-field appearance="outline" class="col">
+          <mat-label>Confirma tu contraseña</mat-label>
+          <input matInput type="password" formControlName="passwordConf" autocomplete="disabled">
+          <mat-error *ngIf="form.controls['passwordConf']?.invalid && (form.controls['passwordConf']?.dirty || form.controls['passwordConf']?.touched)">
+              <span *ngIf="form.controls['passwordConf']?.errors?.['passwordConf']">Confirmar contraseña es requerido</span>
+          </mat-error>
       </mat-form-field>
     </div>
 

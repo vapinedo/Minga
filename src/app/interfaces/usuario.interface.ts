@@ -1,5 +1,5 @@
 export interface Usuario {
-    name: any;
+    name: string;
     documentNumber: string;
     email: string;
     phone: string;
